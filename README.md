@@ -20,22 +20,29 @@ or draw.io Desktop.
 
 ## Install
 
-Install from a GitHub repository with the skills CLI:
+Install from this GitHub repository with the skills CLI:
 
 ```bash
-npx skills add <owner>/<repo>
-```
-
-If the skill lives in a subdirectory of a repository:
-
-```bash
-npx skills add https://github.com/<owner>/<repo>/tree/main/drawio-diagrams
+npx skills add johnathonstarkwill-jpg/drawio-diagrams-skill
 ```
 
 For Codex:
 
 ```bash
-npx skills add <owner>/<repo> -a codex
+npx skills add johnathonstarkwill-jpg/drawio-diagrams-skill -a codex
+```
+
+Repository:
+
+```text
+https://github.com/johnathonstarkwill-jpg/drawio-diagrams-skill
+```
+
+If you fork this skill into a subdirectory of another repository, install with
+the full GitHub tree URL:
+
+```bash
+npx skills add https://github.com/<owner>/<repo>/tree/main/drawio-diagrams
 ```
 
 ## Use In An Agent
