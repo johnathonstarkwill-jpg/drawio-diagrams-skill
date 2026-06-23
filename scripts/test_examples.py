@@ -8,7 +8,11 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
-from xml.etree import ElementTree as ET
+
+try:
+    from defusedxml import ElementTree as ET
+except ImportError:  # pragma: no cover - stdlib fallback for trusted local outputs.
+    from xml.etree import ElementTree as ET
 
 
 SKILL_DIR = Path(__file__).resolve().parents[1]
