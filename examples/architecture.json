@@ -1,0 +1,112 @@
+{
+  "title": "Client Server Architecture Example",
+  "pageWidth": 980,
+  "pageHeight": 680,
+  "groups": [
+    {
+      "id": "G_SERVER",
+      "label": "Server Node",
+      "x": 130,
+      "y": 50,
+      "width": 720,
+      "height": 390,
+      "style": "group"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "CONTROL_SERVER",
+      "label": "Control Server\\nTCP :48200",
+      "shape": "process",
+      "x": 190,
+      "y": 120,
+      "width": 170,
+      "height": 80,
+      "parent": "G_SERVER"
+    },
+    {
+      "id": "WORKER",
+      "label": "Worker Process\\nTCP / UDP :5201",
+      "shape": "process",
+      "x": 560,
+      "y": 120,
+      "width": 210,
+      "height": 80,
+      "parent": "G_SERVER"
+    },
+    {
+      "id": "STATE_MACHINE",
+      "label": "Scheduler State Machine\\nqueue[A, B, C]\\ndispatchNext()\\nresults{clientId -> metrics[]}",
+      "shape": "process",
+      "x": 260,
+      "y": 275,
+      "width": 460,
+      "height": 110,
+      "parent": "G_SERVER"
+    },
+    {
+      "id": "CHANNEL",
+      "label": "Control Channel\\nNDJSON over TCP",
+      "shape": "note",
+      "x": 390,
+      "y": 470,
+      "width": 200,
+      "height": 55
+    },
+    {
+      "id": "CLIENT_A",
+      "label": "Client A\\ncompleted",
+      "shape": "terminator",
+      "x": 185,
+      "y": 575,
+      "width": 150,
+      "height": 60
+    },
+    {
+      "id": "CLIENT_B",
+      "label": "Client B\\ndisconnected",
+      "shape": "terminator",
+      "x": 415,
+      "y": 575,
+      "width": 150,
+      "height": 60
+    },
+    {
+      "id": "CLIENT_C",
+      "label": "Client C\\ntesting",
+      "shape": "terminator",
+      "x": 645,
+      "y": 575,
+      "width": 150,
+      "height": 60
+    }
+  ],
+  "edges": [
+    {
+      "id": "E_CONTROL_TO_STATE",
+      "source": "CONTROL_SERVER",
+      "target": "STATE_MACHINE"
+    },
+    {
+      "id": "E_STATE_TO_CHANNEL",
+      "source": "STATE_MACHINE",
+      "target": "CHANNEL",
+      "label": "dispatch / status / metrics"
+    },
+    {
+      "id": "E_CHANNEL_A",
+      "source": "CHANNEL",
+      "target": "CLIENT_A"
+    },
+    {
+      "id": "E_CHANNEL_B",
+      "source": "CHANNEL",
+      "target": "CLIENT_B"
+    },
+    {
+      "id": "E_CHANNEL_C",
+      "source": "CHANNEL",
+      "target": "CLIENT_C"
+    }
+  ]
+}

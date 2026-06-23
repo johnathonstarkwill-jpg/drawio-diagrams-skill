@@ -1,0 +1,5 @@
+interface:
+  display_name: "Draw.io Diagrams"
+  short_description: "Create editable draw.io flowcharts, architecture diagrams, pipelines, and PID diagrams"
+  brand_color: "#2563EB"
+  default_prompt: "Use $drawio-diagrams to create an editable draw.io flowchart from this process description."

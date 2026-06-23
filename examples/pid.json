@@ -1,0 +1,64 @@
+{
+  "title": "Simplified PID Example",
+  "pageWidth": 1200,
+  "pageHeight": 700,
+  "nodes": [
+    {
+      "id": "tank",
+      "label": "20#",
+      "shape": "process",
+      "x": 120,
+      "y": 180,
+      "width": 120,
+      "height": 60
+    },
+    {
+      "id": "valve",
+      "label": "XV-21",
+      "shape": "valve",
+      "x": 330,
+      "y": 185,
+      "width": 80,
+      "height": 50
+    },
+    {
+      "id": "pump",
+      "label": "P-201",
+      "shape": "pump",
+      "x": 500,
+      "y": 175,
+      "width": 80,
+      "height": 80
+    },
+    {
+      "id": "lt",
+      "label": "LT-21",
+      "shape": "instrument",
+      "x": 330,
+      "y": 70,
+      "width": 70,
+      "height": 70
+    }
+  ],
+  "edges": [
+    {
+      "id": "flow1",
+      "source": "tank",
+      "target": "valve",
+      "style": "process"
+    },
+    {
+      "id": "flow2",
+      "source": "valve",
+      "target": "pump",
+      "style": "process"
+    },
+    {
+      "id": "sig1",
+      "source": "lt",
+      "target": "valve",
+      "label": "open/close",
+      "style": "signal"
+    }
+  ]
+}

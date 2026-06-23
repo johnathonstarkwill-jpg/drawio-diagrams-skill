@@ -1,0 +1,152 @@
+{
+  "title": "Data Pipeline Example",
+  "pageWidth": 1180,
+  "pageHeight": 820,
+  "groups": [
+    {
+      "id": "G_INPUT",
+      "label": "Input and Scene Build",
+      "x": 70,
+      "y": 40,
+      "width": 1040,
+      "height": 300,
+      "style": "group"
+    },
+    {
+      "id": "G_DETECT",
+      "label": "Pluggable Detection Interface",
+      "x": 90,
+      "y": 390,
+      "width": 470,
+      "height": 260,
+      "style": "group"
+    },
+    {
+      "id": "G_VOLUME",
+      "label": "Pluggable Volume Interface",
+      "x": 620,
+      "y": 390,
+      "width": 470,
+      "height": 260,
+      "style": "group"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "INPUT_TILES",
+      "label": "3D Tiles\\nPoint Cloud / Mesh",
+      "shape": "process",
+      "x": 190,
+      "y": 90,
+      "width": 220,
+      "height": 70,
+      "parent": "G_INPUT"
+    },
+    {
+      "id": "MERGE_CLOUD",
+      "label": "Merge into one coordinate point cloud",
+      "shape": "process",
+      "x": 480,
+      "y": 90,
+      "width": 220,
+      "height": 70,
+      "parent": "G_INPUT"
+    },
+    {
+      "id": "BUILD_SCENE",
+      "label": "build_scene()\\ncompute once",
+      "shape": "process",
+      "x": 480,
+      "y": 210,
+      "width": 220,
+      "height": 70,
+      "parent": "G_INPUT"
+    },
+    {
+      "id": "SCENE_TRUTH",
+      "label": "Scene single source of truth\\nDSM / HAG / RGB\\noccupancy / CRS / rotation",
+      "shape": "terminator",
+      "x": 770,
+      "y": 195,
+      "width": 250,
+      "height": 100,
+      "parent": "G_INPUT"
+    },
+    {
+      "id": "DETECT_API",
+      "label": "detect(scene)\\n-> footprints",
+      "shape": "process",
+      "x": 240,
+      "y": 430,
+      "width": 170,
+      "height": 70,
+      "parent": "G_DETECT"
+    },
+    {
+      "id": "VOLUME_API",
+      "label": "estimate(scene, footprints)\\n-> volumes",
+      "shape": "process",
+      "x": 765,
+      "y": 430,
+      "width": 190,
+      "height": 70,
+      "parent": "G_VOLUME"
+    },
+    {
+      "id": "EXPORT",
+      "label": "Export\\nareas + volumes\\npolygons / CSV / overlay",
+      "shape": "terminator",
+      "x": 425,
+      "y": 705,
+      "width": 330,
+      "height": 80
+    }
+  ],
+  "edges": [
+    {
+      "id": "E_INPUT_MERGE",
+      "source": "INPUT_TILES",
+      "target": "MERGE_CLOUD"
+    },
+    {
+      "id": "E_MERGE_BUILD",
+      "source": "MERGE_CLOUD",
+      "target": "BUILD_SCENE"
+    },
+    {
+      "id": "E_BUILD_SCENE",
+      "source": "BUILD_SCENE",
+      "target": "SCENE_TRUTH",
+      "label": "compute once"
+    },
+    {
+      "id": "E_SCENE_DETECT",
+      "source": "SCENE_TRUTH",
+      "target": "DETECT_API",
+      "label": "Scene"
+    },
+    {
+      "id": "E_SCENE_VOLUME",
+      "source": "SCENE_TRUTH",
+      "target": "VOLUME_API",
+      "label": "Scene"
+    },
+    {
+      "id": "E_DETECT_VOLUME",
+      "source": "DETECT_API",
+      "target": "VOLUME_API",
+      "label": "footprints",
+      "style": "signal"
+    },
+    {
+      "id": "E_DETECT_EXPORT",
+      "source": "DETECT_API",
+      "target": "EXPORT"
+    },
+    {
+      "id": "E_VOLUME_EXPORT",
+      "source": "VOLUME_API",
+      "target": "EXPORT"
+    }
+  ]
+}
